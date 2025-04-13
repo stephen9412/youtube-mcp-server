@@ -1,0 +1,49 @@
+{
+  "name": "fastmcp-template",
+  "version": "0.0.1",
+  "description": "A minimal template for publishing a Fast MCP project.",
+  "type": "module",
+  "main": "dist/server.js",
+  "bin": "./dist/server.js",
+  "author": "Stephen Jieying Li",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stephen9412/fastmcp-template"
+  },
+  "bugs": {
+    "url": "https://github.com/stephen9412/fastmcp-template/issues"
+  },
+  "homepage": "https://github.com/stephen9412/fastmcp-template#readme",
+  "keywords": [
+    "mcp",
+    "fastmcp",
+    "template"
+  ],
+  "scripts": {
+    "dev": "fastmcp dev src/server.ts",
+    "inspect": "fastmcp inspect src/server.ts",
+    "start": "npm run build && node dist/server.js",
+    "prepare": "npm run build",
+    "build": "tsc && chmod +x ./dist/server.js",
+    "test": "vitest run",
+    "test:watch": "vitest --watch",
+    "lint": "eslint",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "fastmcp": "^1.21.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "eslint": "^9.24.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.1"
+  }
+}
