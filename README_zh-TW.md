@@ -1,4 +1,4 @@
-# YouTube MCP Server
+# Runnable YouTube MCP Server
 
 一個專為 YouTube 打造的 FastMCP 伺服器，統一提供影片、頻道、播放清單資訊查詢、下載與管理工具，適合自動化與 memo agent 整合。
 

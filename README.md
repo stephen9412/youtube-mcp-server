@@ -1,4 +1,4 @@
-# YouTube MCP Server
+# Runnable YouTube MCP Server
 
 A FastMCP server for YouTube: unified video/channel/playlist info, download, and management tools for memo agents and automation.
 
