@@ -1,6 +1,6 @@
 {
   "name": "runnable-youtube-mcp-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A FastMCP server for YouTube: unified video/channel/playlist info, download, and management tools for memo agents and automation.",
   "type": "module",
   "main": "dist/server.js",
