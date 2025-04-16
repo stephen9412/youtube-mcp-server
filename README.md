@@ -1,199 +1,117 @@
-# FastMCP Template
+# YouTube MCP Server
 
-A minimal template for publishing a Fast MCP project. This project provides a lightweight starting point for developing and publishing FastMCP servers.
+A FastMCP server for YouTube: unified video/channel/playlist info, download, and management tools for memo agents and automation.
 
-## Purpose
+---
 
-This template was created as a minimal publishable FastMCP template. Since n8n mcp client and Cherry Studio can only use npx in a stateless manner, many Python MCP servers would benefit from being rewritten in JavaScript for better usability. This template serves as a starting point for such development.
+## Why this project?
 
-## Features
+Most YouTube MCP servers available are either unmaintainable, fail to compile, or are implemented only in Python and provide only basic video download features.  
+When building my own memo agent, I found it difficult to automatically retrieve YouTube video information for summarization and automation.  
+This project was created to solve that problem and provide a robust, extensible, and developer-friendly YouTube MCP server.
 
-- Simple and minimal implementation
-- Ready to publish
-- Stateless design for compatibility with npx
-- TypeScript support
-- Easy to extend and customize
+---
 
-## Quick Start
+## ✨ Features
 
-> For more detailed usage and advanced features, please visit the [FastMCP GitHub repository](https://github.com/punkpeye/fastmcp).
+- Unified access to YouTube video, channel, and playlist information
+- Download video/audio streams in various formats and qualities
+- Extract and process video thumbnails
+- Manage playlist content (add, remove, reorder)
+- Manage video privacy status (public/private/unlisted)
+- List available subtitle languages
+- Designed for integration with memo agents and automation workflows
+- Extensible, maintainable, and fully open source
 
-To develop a new tool for your FastMCP server, follow these steps to modify the `src/server.ts` file:
+---
 
-```ts
-# Original file content (starting code)
-#!/usr/bin/env node
-import { FastMCP, UserError } from "fastmcp";
-import { z } from "zod";
+## 🛠️ Available Tools
 
-const server = new FastMCP({
-  name: "FastMCP Minimal implementation",
-  version: "0.0.1",
-});
+| Tool Name            | Description                                         | Status      |
+|----------------------|-----------------------------------------------------|-------------|
+| describeVideo        | Get video information (selectable sections)         | ✅          |
+| getDownloadOptions   | Get available download formats/qualities            | ❌          |
+| downloadVideo        | Download video/audio stream                         | ❌          |
+| extractThumbnail     | Extract and process video thumbnail                 | ❌          |
+| listSubtitleLanguages| Get available subtitle languages for a video        | ❌          |
+| manageVideoStatus    | Manage video privacy status                         | ❌          |
+| describeChannel      | Get public channel information                      | ❌          |
+| describePlaylist     | Get public playlist information                     | ❌          |
+| managePlaylistItems  | Playlist content management (add/remove/reorder)    | ❌          |
 
-server.addTool({
-  name: "add",
-  description: "Add two numbers",
-  parameters: z.object({
-    a: z.number(),
-    b: z.number(),
-  }),
-  execute: async (args) => {
-    if (false) {
-      throw new UserError("Error Message.");
-    }
+> Only `describeVideo` is currently tested and working. Others are implemented but not fully tested.
 
-    return String(args.a + args.b);
-  },
-});
+---
 
-server.start({
-  transportType: "stdio",
-});
+## 🚀 Installation
+
+### Prerequisites
+
+- Node.js 18+
+- YouTube Data API v3 key
+
+### Install
+
+```bash
+npm install youtube-mcp-server
 ```
 
-Now, let's add a new tool! For example, you can add a random number generator tool:
+### Environment Variables
 
-```diff
-#!/usr/bin/env node
-import { FastMCP, UserError } from "fastmcp";
-import { z } from "zod";
+Create a `.env` file or set these variables in your environment:
 
-const server = new FastMCP({
-  name: "FastMCP Minimal implementation",
-  version: "0.0.1",
-});
-
-server.addTool({
-  name: "add",
-  description: "Add two numbers",
-  parameters: z.object({
-    a: z.number(),
-    b: z.number(),
-  }),
-  execute: async (args) => {
-    if (false) {
-      throw new UserError("Error Message.");
-    }
-
-    return String(args.a + args.b);
-  },
-});
-
-+ // Add a new random number generator tool
-+ server.addTool({
-+   name: "random",
-+   description: "Generate a random number between min and max (inclusive)",
-+   parameters: z.object({
-+     min: z.number().default(0),
-+     max: z.number().default(100),
-+   }),
-+   execute: async (args) => {
-+     const min = Math.ceil(args.min);
-+     const max = Math.floor(args.max);
-+     const result = Math.floor(Math.random() * (max - min + 1)) + min;
-+     return String(result);
-+   },
-+ });
-
-server.start({
-  transportType: "stdio",
-});
+```text
+YOUTUBE_API_KEY=YOUR_YOUTUBE_API_KEY
+DOWNLOAD_BASE_DIR=./downloads
 ```
 
-For more comprehensive examples and advanced usage patterns, refer to the [FastMCP documentation](https://github.com/punkpeye/fastmcp).
-
-## Running Your Server
-
-### Development
+### Run in Development
 
 ```bash
 npm run dev
 ```
 
-### Inspection
+### Run in Production
 
 ```bash
-npm run inspect
+npm run build
+npm start
 ```
 
-### Production
+---
 
-```bash
-npm run start
-```
-
-## How to use with Claude Desktop?
-
-### Using the Published Package (Stateless Execution)
-
-After publishing to npm, you can use the package in a stateless manner with npx:
+## 🧩 MCP Integration Example
 
 ```json
 {
   "mcpServers": {
-    "fastmcp-template": {
-      "command": "npx",
-      "args": [
-        "fastmcp-template"
-      ],
-      "env": {
-        "NODE_ENV": "production"
-      }
-    }
-  }
-}
-```
-
-### Using a Local Development Version
-
-For local development or custom versions:
-
-```json
-{
-  "mcpServers": {
-    "my-mcp-server": {
+    "youtube": {
       "command": "npx",
       "args": [
         "tsx",
         "/PATH/TO/YOUR_PROJECT/src/server.ts"
       ],
       "env": {
-        "YOUR_ENV_VAR": "value"
+        "YOUTUBE_API_KEY": "YOUR_YOUTUBE_API_KEY"
       }
     }
   }
 }
 ```
 
-### Using from a Custom Registry
+---
 
-If you're using a private npm registry:
+## 🤝 Contributing
 
-```json
-{
-  "mcpServers": {
-    "fastmcp-template": {
-      "command": "npx",
-      "args": [
-        "--registry=https://your-private-registry.com",
-        "fastmcp-template"
-      ],
-      "env": {
-        "NODE_ENV": "production"
-      }
-    }
-  }
-}
-```
+Contributions, issues and feature requests are welcome!  
+Visit the [issues page](https://github.com/stephen9412/youtube-mcp-server/issues).
 
-## Issues and Contributions
+---
 
-If you encounter any issues or would like to contribute to this project, please visit our [GitHub repository](https://github.com/stephen9412/fastmcp-template).
+## 📄 License
 
-- Report issues: [https://github.com/stephen9412/fastmcp-template/issues]
-- Submit contributions: Create a pull request on our GitHub repository
+[MIT License](LICENSE) - Copyright (c) 2025 Stephen J. Li
 
-## License
+---
 
-MIT
+[中文版 README](README_zh-TW.md)

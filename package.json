@@ -1,7 +1,7 @@
 {
-  "name": "fastmcp-template",
+  "name": "youtube-mcp-server",
   "version": "0.0.1",
-  "description": "A minimal template for publishing a Fast MCP project.",
+  "description": "A FastMCP server for YouTube: unified video/channel/playlist info, download, and management tools for memo agents and automation.",
   "type": "module",
   "main": "dist/server.js",
   "bin": "./dist/server.js",
@@ -14,16 +14,18 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/stephen9412/fastmcp-template"
+    "url": "https://github.com/stephen9412/youtube-mcp-server"
   },
   "bugs": {
-    "url": "https://github.com/stephen9412/fastmcp-template/issues"
+    "url": "https://github.com/stephen9412/youtube-mcp-server/issues"
   },
-  "homepage": "https://github.com/stephen9412/fastmcp-template#readme",
+  "homepage": "https://github.com/stephen9412/youtube-mcp-server#readme",
   "keywords": [
     "mcp",
     "fastmcp",
-    "template"
+    "youtube",
+    "automation",
+    "memo-agent"
   ],
   "scripts": {
     "dev": "fastmcp dev src/server.ts",
@@ -37,7 +39,11 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
+    "dotenv": "^16.5.0",
     "fastmcp": "^1.21.0",
+    "googleapis": "^148.0.0",
+    "jimp": "^1.6.0",
+    "ytdl-core": "^4.11.5",
     "zod": "^3.24.2"
   },
   "devDependencies": {

@@ -1,27 +1,21 @@
-#!/usr/bin/env node
-import { FastMCP, UserError } from "fastmcp";
-import { z } from "zod";
+import dotenv from 'dotenv';
+import { FastMCP } from "fastmcp";
+
+import { registerChannelTools } from "./channel.js";
+import { registerVideoTools } from "./video.js";
+import { registerPlaylistTools } from "./playlist.js";
+
+dotenv.config();
 
 const server = new FastMCP({
-  name: "FastMCP Minimal implementation",
-  version: "0.0.1",
+  name: "YouTube MCP Stateless API",
+  version: "0.1.0",
 });
 
-server.addTool({
-  name: "add",
-  description: "Add two numbers",
-  parameters: z.object({
-    a: z.number(),
-    b: z.number(),
-  }),
-  execute: async (args) => {
-    if (false) {
-      throw new UserError("Error Message.");
-    }
-
-    return String(args.a + args.b);
-  },
-});
+// 註冊三大領域工具
+registerChannelTools(server);
+registerVideoTools(server);
+registerPlaylistTools(server);
 
 server.start({
   transportType: "stdio",
